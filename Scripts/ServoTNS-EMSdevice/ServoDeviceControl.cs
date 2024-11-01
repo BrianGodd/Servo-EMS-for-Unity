@@ -284,19 +284,24 @@ public class ServoDeviceControl : MonoBehaviour
         if(_ch == 3)
         {
             GiveCommandToArduinoBoard(3, ampl, ampl2);
-            if(time >= time2)
+            if(time > time2)
             {
                 yield return new WaitForSeconds(time2);
                 GiveCommandToArduinoBoard(3, -1, 0);
                 yield return new WaitForSeconds(time-time2);
                 GiveCommandToArduinoBoard(3, 0, -1);
             }
-            else
+            else if(time < time2)
             {
                 yield return new WaitForSeconds(time);
                 GiveCommandToArduinoBoard(3, 0, -1);
                 yield return new WaitForSeconds(time2-time);
                 GiveCommandToArduinoBoard(3, -1, 0);
+            }
+            else
+            {
+                yield return new WaitForSeconds(time);
+                GiveCommandToArduinoBoard(3, 0, 0);
             }
             StartBoth.interactable = true;
         }
